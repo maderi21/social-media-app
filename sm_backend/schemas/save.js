@@ -1,10 +1,10 @@
 export default {
   name: 'save',
   title: 'Save',
-  type: 'postedBy',
+  type: 'document',
   fields: [
     {
-      name: ' postedBy',
+      name: 'postedBy',
       title: 'PostedBy',
       type: 'postedBy',
     },
