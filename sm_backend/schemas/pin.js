@@ -6,12 +6,12 @@ export default {
     {
       name: 'title',
       title: 'Title',
-      type: 'sting',
+      type: 'string',
     },
     {
       name: 'about',
       title: 'Aitle',
-      type: 'sting',
+      type: 'string',
     },
     {
       name: 'destination',
@@ -38,13 +38,28 @@ export default {
     },
     {
       name: 'postedBy',
-      title: 'UserID',
-      type: 'string',
+      title: 'PostedBy',
+      type: 'postedBy',
     },
     {
-      name: 'userId',
-      title: 'UserID',
-      type: 'string',
+      name: 'save',
+      title: 'Save',
+      type: 'array',
+      of: [
+        {
+          type: 'save',
+        },
+      ],
+    },
+    {
+      name: 'comments',
+      title: 'Comments',
+      type: 'array',
+      of: [
+        {
+          type: 'comment',
+        },
+      ],
     },
   ],
 }
