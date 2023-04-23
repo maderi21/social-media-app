@@ -1,7 +1,23 @@
 import React from "react";
+import Masonry from "react-masonry-css";
+import Pin from "./Pin";
 
-const MosonryLayout = () => {
-  return <div>MosonryLayout</div>;
+const breakpointObj = {
+  default: 4,
+  3000: 6,
+  2000: 5,
+  1200: 3,
+  1000: 2,
+  500: 1,
 };
 
-export default MosonryLayout;
+const MasonryLayout = () => {
+  return (
+    <Masonry
+      className="flex animate-slide-fwd"
+      breakpointObjCols={breakpointObj}
+    ></Masonry>
+  );
+};
+
+export default MasonryLayout;
