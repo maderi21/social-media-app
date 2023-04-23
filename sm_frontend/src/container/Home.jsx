@@ -16,10 +16,7 @@ const Home = () => {
   const [user, setUser] = useState(null);
   const scrollRef = useRef(null);
 
-  const userInfo =
-    localStorage.getItem("user") !== "undefined"
-      ? JSON.parse(localStorage.getItem("user"))
-      : localStorage.clear;
+  const userInfo = fetchUser();
 
   useEffect(() => {
     const query = userQuary(userInfo?.googleId);
