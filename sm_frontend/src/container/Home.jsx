@@ -10,6 +10,7 @@ import { client } from "./client.js";
 import logo from "../assets/logo.png";
 
 import React from "react";
+import { fetchUser } from "../utils/fetchUser";
 
 const Home = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);

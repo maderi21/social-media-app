@@ -5,17 +5,35 @@ import { v4 as uuidv4 } from "uuid";
 import { MdDownloadForOffline } from "react-icons/md";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
+import { fetchUser } from "../utils/fetchUser";
 
-const Pin = ({ pin: { postedBy, image, _id, destination } }) => {
+const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   const [postHovered, setPostHovered] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
 
   const navigate = useNavigate();
-	
-	const userInfo =
-    localStorage.getItem("user") !== "undefined"
-      ? JSON.parse(localStorage.getItem("user"))
-      : localStorage.clear;
+
+	const user = fetchUser();
+const alreadySaved = !!(save?.filter((item) => item.postedBy_id === user.googleId))?.length;
+const savePin = (id) => {
+	if(!alreadySaved) {
+		setSavingPost(true);
+client
+.patch(id)
+.setIfMissing({save: []})
+.insert('after', 'save[-1]',[{
+_key:uuidv4(),
+userId: user.googleId,
+postedBy: {
+	_type: 'postedBy',
+	_ref: user.googleId
+}
+
+}])
+
+	}
+}
+
 
   return (
     <div className="m-2">
@@ -37,18 +55,23 @@ const Pin = ({ pin: { postedBy, image, _id, destination } }) => {
 <a
 href={`${image?.asset?.url}?dl=`}
 download
-inClick={(e)=> e.stopPropagation()}
+onClick={(e)=> e.stopPropagation()}
 className="bg-white w-9 h-9 rounded-full flex-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none">
 	<MdDownloadForOffline/>
 </a>
 			</div>
 			</div>
-			{alreadySaved?.length !==0 ? (
-				<button>
-					Saved
+			{alreadySaved? (
+				<button type="button" className="bg-red-500 bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3x1 hover:shadow-md outline-none ">
+				{save?.length}Saved
 				</button>
 			): (
-				<button>
+				<button 
+				onClick={(e)=> {
+					e.stopPropagation()
+					savePin(_id);
+				}}
+				type="button" className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3x1 hover:shadow-md outline-none">
 					Save
 				</button>
 			)}
