@@ -19,8 +19,8 @@ const CreatePin = (user) => {
 
   const navigate = useNavigate();
 
-  const uploadImgae = (e) => {
-    const { type } = e.target.files[0];
+  const uploadImage = (e) => {
+    const { type, name } = e.target.files[0];
 
     if (
       type === "image/png" ||
@@ -31,6 +31,19 @@ const CreatePin = (user) => {
     ) {
       setWrongImageType(false);
       setLoading(true);
+
+      client.assets
+        .upload("image", e.target.files[0], {
+          contentType: type,
+          filename: name,
+        })
+        .then((document) => {
+          setImageAsset(document);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log("Image upload error", error);
+        });
     } else {
       setWrongImageType(true);
     }
@@ -69,7 +82,22 @@ const CreatePin = (user) => {
                 ></imput>
               </label>
             ) : (
-              <p>something else</p>
+              <div className="relative h-full">
+                <img
+                  src={imageAsset?.url}
+                  alt="uploaded-pic"
+                  className="h-full w-full"
+                />
+                <button
+                  type="button"
+                  className="absolute bottom-3 right-3 p-3 rounded-full bg-white text-xl cursor-pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out"
+                  onClick={() => {
+                    setImageAsset(null);
+                  }}
+                >
+                  <MdDelete />
+                </button>
+              </div>
             )}
           </div>
         </div>
