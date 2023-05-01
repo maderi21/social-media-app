@@ -26,7 +26,7 @@ userId: user.googleId,
 postedBy: {
 	_type: 'postedBy',
 	_ref: user.googleId
-};
+}
 }])
 .commit()
 .then(()=> {
