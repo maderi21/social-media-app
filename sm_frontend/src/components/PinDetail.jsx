@@ -52,7 +52,7 @@ const PinDetail = (user) => {
         <div className="flex items-center justify-between">
           <div className="flex gap-2 items-center ">
             <a
-              href={`${image?.asset?.url}?dl=`}
+              href={`${pinDetail.image?.asset?.url}?dl=`}
               download
               onClick={(e) => e.stopPropagation()}
               className="bg-white w-9 h-9 rounded-full flex-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
@@ -60,6 +60,37 @@ const PinDetail = (user) => {
               <MdDownloadForOffline />
             </a>
           </div>
+          <a gref={pinDetail.destination} target="_blank" rel="noreferrer">
+            {pinDetail.destination}
+          </a>
+        </div>
+        <div>
+          <h1 className="text-4xl font-bold break-words mt-3">
+            {pinDetail.title}
+          </h1>
+          <p className="mt-3">{pinDetail.about}</p>
+        </div>
+        <Link
+          to={`user-profile/${pinDetail.postedBy?._id}`}
+          className="flex gap-2 mt-5 items-center bg-white rounded-lg"
+        >
+          <img
+            className="w-8 h-8 rounded-full object-cover"
+            src={pinDetail.postedBy?.image}
+            alt="user-profile"
+          />
+          <p className="font-semibold capitalize">
+            {pinDetail.postedBy?.userName}
+          </p>
+        </Link>
+        <h2 className="mt-5 text-2xl">Comments</h2>
+        <div className="max-h-370 overflow-y-auto">
+          {pinDetail.comments.map((comment, i) => (
+            <div
+              className="flex mt-5 items-center bg-white rounded-lg"
+              key={i}
+            ></div>
+          ))}
         </div>
       </div>
     </div>
