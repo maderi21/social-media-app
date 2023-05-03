@@ -15,6 +15,11 @@ import Spinner from "./Spinner";
 const randomImage =
   "https://source.unsplash.com/1600x900/?nature,photography,technology";
 
+const activeBtnStyles =
+  "bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none";
+const notActiveBtnStyles =
+  "bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none";
+
 const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [pins, setPins] = useState(null);
@@ -29,6 +34,25 @@ const UserProfile = () => {
       setUser(data[0]);
     });
   }, [userId]);
+
+  useEffect(() => {
+    if (text === "Created") {
+      const createdPinsQuery = userCreatedPinsQuery(userId);
+      client.fetch(createdPinsQuery).then((data) => {
+        setPins(data);
+      });
+    } else {
+      const savedPinsQuery = userSavedPinsQuery(userId);
+      client.fetch(savedPinsQuery).then((data) => {
+        setPins(data);
+      });
+    }
+  }, [text, userId]);
+
+  constlogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   if (!user) {
     return <Spinner message="Loading profile..." />;
@@ -59,21 +83,56 @@ const UserProfile = () => {
                   render={(renderProps) => (
                     <button
                       type="button"
-                      className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
+                      className="bg-white p-2 rounded-full cursor-pointer outline-none shadow-md"
                       onClick={renderProps.onClick}
                       disabled={renderProps.disabled}
                     >
-                      <FcGoogle className="mr-4" /> Sign in with google
+                      <AiOutlineLogout color="red" fontSize={21} /> Sign in with
+                      google
                     </button>
                   )}
-                  onSuccess={responseGoogle}
-                  onFailure={responseGoogle}
+                  onLogoutSuccess={logout}
                   cookiePolicy="single_host_origin"
                 />
               )}
               ;
             </div>
           </div>
+          <div className="text-center mb-7">
+            <button
+              type="button"
+              onClick={(e) => {
+                setText(e.target.textContent);
+                setActiveBtn("created");
+              }}
+              className={`${
+                activeBtn === "created" ? activeBtnStyles : notActiveBtnStyles
+              }`}
+            >
+              Created
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                setText(e.target.textContent);
+                setActiveBtn("saved");
+              }}
+              className={`${
+                activeBtn === "saved" ? activeBtnStyles : notActiveBtnStyles
+              }`}
+            >
+              Saved
+            </button>
+          </div>
+          {pins?.lenght ? (
+            <div className="px-2">
+              <MasonryLayout pins={pins} />
+            </div>
+          ) : (
+            <div className="flex justify-center font-bold items-center w-full text-xl mt-2">
+              No Pins Found
+            </div>
+          )}
         </div>
       </div>
     </div>
