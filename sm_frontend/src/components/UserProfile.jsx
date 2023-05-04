@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineLogout } from "rect-icons/ai";
-import { ueParams, useNavigate, useParams } from "react-router-dom";
+import { AiOutlineLogout } from "react-icons/ai";
+import { useParams, useNavigate } from "react-router-dom";
 import { GoogleLogout } from "react-google-login";
 
 import {
@@ -9,7 +9,7 @@ import {
   userSavedPinsQuery,
 } from "../utils/data";
 import { client } from "../client";
-import MasonryLayout from "./MosonryLayout";
+import MasonryLayout from "./MasonryLayout";
 import Spinner from "./Spinner";
 
 const randomImage =

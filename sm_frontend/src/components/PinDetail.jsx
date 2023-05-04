@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { MdDownloadForOffline } from "react-icons/md";
-import { link, useParams } from "react-router-dom";
-import { uuidv4 } from "uuid";
+import { Link, useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 import { client, urlFor } from "../client";
 import MassonryLayout from "./MasonryLayout";
-import { PinDetailMorePinQuery, pinDetailQuery } from "../utils/data";
+import { pinDetailMorePinQuery, pinDetailQuery } from "../utils/data";
 import Spinner from "./Spinner";
 
 const PinDetail = (user) => {
@@ -46,7 +46,7 @@ const PinDetail = (user) => {
         setPinDetail(data[0]);
 
         if (data[0]) {
-          query = PinDetailMorePinQuery(data[0]);
+          query = pinDetailMorePinQuery(data[0]);
           client.fetch(query).then((res) => setPins(res));
         }
       });

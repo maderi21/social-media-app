@@ -1,12 +1,12 @@
 import react, { useState, useRef, UseEffect, useEffect } from "react";
-import { HiMenu } from "react-icons/hi-menu";
+import { HiMenu } from "react-icons/hi";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Link, Route, Routes } from "react-router-dom";
 
-import { Sidebar, UserProfile } from "./components";
+import { Sidebar, UserProfile } from "../components";
 import Pins from "./Pins";
 import { userQuary } from "../utils/data";
-import { client } from "./client.js";
+import { client } from "../client.js";
 import logo from "../assets/logo.png";
 
 import React from "react";
@@ -20,7 +20,7 @@ const Home = () => {
   const userInfo = fetchUser();
 
   useEffect(() => {
-    const query = userQuary(userInfo?.googleId);
+    const query = userQuery(userInfo?.googleId);
     client.fetch(query).then((data) => {
       setUser(data[0]);
     });
