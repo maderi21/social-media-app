@@ -5,7 +5,7 @@ import { Link, Route, Routes } from "react-router-dom";
 
 import { Sidebar, UserProfile } from "../components";
 import Pins from "./Pins";
-import { userQuary } from "../utils/data";
+import { userQuery } from "../utils/data";
 import { client } from "../client.js";
 import logo from "../assets/logo.png";
 

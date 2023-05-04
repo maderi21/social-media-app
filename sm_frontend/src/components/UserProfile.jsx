@@ -23,7 +23,7 @@ const notActiveBtnStyles =
 const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [pins, setPins] = useState(null);
-  const [tet, setText] = useState("Created");
+  const [text, setText] = useState("Created");
   const [activeBtn, setActiveBtn] = useState("created");
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -49,7 +49,7 @@ const UserProfile = () => {
     }
   }, [text, userId]);
 
-  constlogout = () => {
+  const logout = () => {
     localStorage.clear();
     navigate("/login");
   };
