@@ -9,13 +9,14 @@ import { fetchUser } from "../utils/fetchUser";
 
 const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   const [postHovered, setPostHovered] = useState(false);
+  const [savingPost, setSavingPost] = useState(false);
   const navigate = useNavigate();
 
   const user = fetchUser();
 
-  let alreadySaved = !!save?.filter(
-    (item) => item.postedBy_id === user.googleId
-  )?.length;
+  const alreadySaved = (!!save?.filter(
+    (item) => item.postedBy_id === user?.googleId
+  ))?.length;
 
   const savePin = (id) => {
     if (!alreadySaved) {
@@ -25,10 +26,10 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
         .insert("after", "save[-1]", [
           {
             _key: uuidv4(),
-            userId: user.googleId,
+            userId: user?.googleId,
             postedBy: {
               _type: "postedBy",
-              _ref: user.googleId,
+              _ref: user?.googleId,
             },
           },
         ])
